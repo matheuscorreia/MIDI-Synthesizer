@@ -3,8 +3,13 @@ import styled from 'styled-components';
 
 import Section from '../common/Section';
 import SectionHeader from '../common/SectionHeader';
-import Button from '../common/Button';
 import Icon from '../icons/Icon';
+
+import Button from '../common/Button';
+
+import { useMidiControls } from '../../hooks/useMidiReader';
+
+import { MidiFileNames } from '../../synthEngine/modules/midi/tracks';
 
 const StyledSectionHeader = styled(SectionHeader)`
   display: flex;
@@ -33,26 +38,25 @@ const TracklistItem = styled.li`
   margin-top: 5px;
 `;
 
-const DefaultMidiList = () => {
+const MidiTracklist = () => {
+  const { loadTrack } = useMidiControls();
+
   return (
     <Section>
       <StyledSectionHeader fullWidth>
         <Icon>music_note</Icon> Tracks
       </StyledSectionHeader>
       <Tracklist>
-        <TracklistItem>
-          <Button fullWidth>
-            Castlevania - Bloody Tears
-          </Button>
-        </TracklistItem>
-        <TracklistItem>
-          <Button fullWidth>
-            Tetris Main Theme
-          </Button>
-        </TracklistItem>
+        {Object.entries(MidiFileNames).map(([id, name]) => (
+          <TracklistItem key={id}>
+            <Button fullWidth onClick={() => loadTrack(id)}>
+              {name}
+            </Button>
+          </TracklistItem>
+        ))}
       </Tracklist>
     </Section>
   );
 }
 
-export default DefaultMidiList;
+export default MidiTracklist;

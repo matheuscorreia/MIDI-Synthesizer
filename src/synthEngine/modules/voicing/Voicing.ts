@@ -40,6 +40,8 @@ class Voicing {
 
     midiReceiver.noteOn.connect(this.onNoteOn, this);
     midiReceiver.noteOff.connect(this.onNoteOff, this);
+
+    midiReceiver.releaseAllNotes.connect(this.onReleaseAllNotes, this);
   }
 
   getOutputNode() {
@@ -66,6 +68,12 @@ class Voicing {
       if(voice.getNoteNumber() === noteNumber && voice.getIsActive()) {
         voice.getVolumeEnvelope().enterStage(EnvelopeStage.RELEASE);
       }
+    });
+  }
+
+  onReleaseAllNotes() {
+    this.voices.forEach(voice => {
+      voice.getVolumeEnvelope().enterStage(EnvelopeStage.RELEASE)
     });
   }
 

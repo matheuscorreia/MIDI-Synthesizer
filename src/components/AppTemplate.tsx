@@ -6,7 +6,9 @@ import Menu from './menu/Menu';
 import PlayBar from './playbar/PlayBar';
 
 const Wrapper = styled.main`
-  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  height: calc(100vh - 60px);
 
   display: flex;
   justify-content: flex-start;

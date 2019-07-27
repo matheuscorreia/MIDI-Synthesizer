@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
 import GithubLogo from '../icons/custom/GithubLogo';
-import DefaultMidiList from './DefaultMidiList';
+import MidiTracklist from './MidiTracklist';
 
 const Link = styled.a`
   position: absolute;
@@ -32,10 +32,10 @@ const Menu = () => {
 
   return (
     <Aside>
-      <Link href='https://google.com' target='_blank'>
+      <Link href='https://github.com/matheuscorreia/MIDI-Synthesizer' target='_blank'>
         <GithubLogo color={theme.colors.primary} size={25} />
       </Link>
-      <DefaultMidiList />
+      <MidiTracklist />
     </Aside>
   )
 };
