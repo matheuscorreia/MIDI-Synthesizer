@@ -2,18 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Synth from './synthesizer/Synth';
-import Menu from './menu/Menu';
-import PlayBar from './playbar/PlayBar';
+import PianoRoll from './pianoRoll/PianoRoll';
 
 const Wrapper = styled.main`
   overflow: hidden;
   position: relative;
-  height: calc(100vh - 60px);
+
+  height: 100vh;
 
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
-
-  padding-bottom: 60px;
 `;
 
 const MainGroup = styled.div`
@@ -26,11 +25,8 @@ const MainGroup = styled.div`
 const AppTemplate = () => {
   return (
     <Wrapper>
-      <MainGroup>
         <Synth />
-      </MainGroup>
-      <Menu />
-      <PlayBar />
+      <PianoRoll />
     </Wrapper>
   )
 }

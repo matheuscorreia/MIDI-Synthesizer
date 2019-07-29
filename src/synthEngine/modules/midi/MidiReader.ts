@@ -1,41 +1,27 @@
-import MidiPlayer, { Player } from 'midi-player-js';
+import MidiPlayer from 'midi-player-js';
 
 import Signal from '../../../helpers/Signal';
 
 import MidiReceiver from './MidiReceiver';
+import Song from './Song';
 
 import MidiFilePaths from './tracks';
 
 class MidiReader {
-  player: MidiPlayer.Player;
+  private player: MidiPlayer.Player;
   private receiver: MidiReceiver;
-  trackPlaying?: keyof MidiFilePaths;
-  currentTime?: number;
 
-  trackChange: Signal;
-  playPauseStatusChange: Signal;
-  playbackSecond: Signal;
+  private currentSongId?: string;
+  private currentSong?: Song;
+
+  private trackLoaded: Signal;
 
   constructor(receiver: MidiReceiver) {
     this.receiver = receiver;
 
     this.player = new MidiPlayer.Player(this.onMidiEvent.bind(this));
 
-    this.player.on('playing', ({ tick }: { tick: Player['tick'] }) => {
-      const bpm = this.player.tempo;
-      const ppq = this.player.division;
-
-      const msPerTick = 60000/(bpm * ppq);
-      const s = Math.floor((tick * msPerTick)/1000);
-
-      if(this.currentTime !== s) {
-        this.playbackSecond.emit(s);
-      }
-    });
-
-    this.trackChange = new Signal();
-    this.playPauseStatusChange = new Signal();
-    this.playbackSecond = new Signal();
+    this.trackLoaded = new Signal();
   }
 
   private onMidiEvent(e: MidiPlayer.Event) {
@@ -48,35 +34,48 @@ class MidiReader {
     }
   }
 
+  onTrackLoaded(handler: (trackId: string) => void) {
+    this.trackLoaded.connect(handler, this);
+  }
+
   play() {
     this.player.play();
-    this.playPauseStatusChange.emit(true);
   }
 
   pause() {
     this.player.pause();
-    this.receiver.releaseAllNotes.emit();
-    this.playPauseStatusChange.emit(false);
   }
 
-  loadTrack(trackId: any) {
-    if(trackId === this.trackPlaying) return;
+  loadTrack(songId: any) {
+    if(songId === this.currentSongId) return;
 
     if(this.player.isPlaying()) this.player.stop();
 
-    fetch(MidiFilePaths[trackId])
+    fetch(MidiFilePaths[songId])
       .then(a => a.blob())
       .then(b => {
         const r = new FileReader();
         r.onloadend = () => {
           this.player.loadDataUri(r.result as string);
           this.player.fileLoaded();
-          this.trackPlaying = trackId;
-          this.trackChange.emit(this.trackPlaying);
+
+          const songEvents = this.player.getEvents() as any;
+
+          this.currentSong = new Song(songEvents, this.player.format, this.player.division);
+
+          this.currentSongId = songId;
+
+          console .log(this.currentSong);
+
+          setTimeout(() => this.trackLoaded.emit(this.currentSongId), 1000)
         };
         r.readAsDataURL(b);
       });
-  } 
+  }
+  
+  getCurrentSong() {
+    return this.currentSong;
+  }
 }
 
 export default MidiReader;

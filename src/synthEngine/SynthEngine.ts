@@ -5,6 +5,8 @@ import MidiReceiver from './modules/midi/MidiReceiver';
 import MidiReader from './modules/midi/MidiReader';
 import EnvelopeGenerator from './modules/envelope/EnvelopeGenerator';
 
+import MidiFilePaths from './modules/midi/tracks';
+
 class SynthEngine {
   private ctx: AudioContext;
 
@@ -27,7 +29,10 @@ class SynthEngine {
 
     this.midiReceiver = new MidiReceiver();
     this.midiReader = new MidiReader(this.midiReceiver);
-
+    setTimeout(() => {
+      this.midiReader.loadTrack('TETRIS_THEME');
+      // this.midiReader.play();
+    }, 2000);
     this.volumeEnvelope = new EnvelopeGenerator(0.01, 0.5 , 1, 0.5);
     this.voicing = new Voicing(
       this.ctx,
