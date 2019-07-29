@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { hex2rgba } from '../../helpers/ui';
+
 import { TrackMidiNote } from '../../synthEngine/modules/midi/types';
 
 const QuarterNoteWidth = 80;
@@ -12,9 +14,8 @@ const MidiNote = styled.div`
 
   height: 15px;
   background-color: #FFF;
-
-  color: black;
-  font-size: 7px;
+  border-radius: 2px;
+  box-shadow: 0px 0px 2px 0px ${props => hex2rgba(props.theme.colors.secondary, 0.12)} inset;
 `;
 
 type Props = {
@@ -42,7 +43,7 @@ const Track = ({ notes, tickDivision }: Props) => {
               left: offsetLeft,
               width: width,
             }}
-          >{note.noteName}</MidiNote>
+          />
         )
       })}
     </React.Fragment>

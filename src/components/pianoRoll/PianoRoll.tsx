@@ -8,7 +8,7 @@ import Track from './Track';
 
 const PianoRollWindowWrapper = styled.div`
   display: flex;
-  height: 50%;
+  flex: 1;
   overflow-y: scroll;
   overflow-x: hidden;
 
