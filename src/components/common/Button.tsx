@@ -50,9 +50,9 @@ type Props = {
   centerContent?: boolean;
 }
 
-const Button = ({ children, onClick, fullWidth, centerContent }: Props) => {
+const Button = ({ children, onClick, fullWidth, centerContent, ...props }: Props) => {
   return (
-    <ButtonWrapper onClick={onClick} fullWidth={fullWidth} centerContent={centerContent}>
+    <ButtonWrapper onClick={onClick} fullWidth={fullWidth} centerContent={centerContent} {...props}>
       {children}
     </ButtonWrapper>
   );

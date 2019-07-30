@@ -2,11 +2,12 @@ import React from 'react';
 
 type Props = {
   children: string;
+  className: string;
 }
 
-const Icon = ({ children }:Props) => {
+const Icon = ({ children, className, ...props }:Props) => {
   return (
-    <i className='material-icons'>{children}</i>
+    <i className={`material-icons ${className}`} >{children}</i>
   )
 }
 

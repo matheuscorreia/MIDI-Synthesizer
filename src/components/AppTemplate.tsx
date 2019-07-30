@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import Synth from './synthesizer/Synth';
 import PianoRoll from './pianoRoll/PianoRoll';
+import PianoRollCollapse from './pianoRoll/PianoRollCollapse';
+import PianoRollCollapseSwitch from './pianoRoll/PianoRollCollapseSwitch';
+import MidiControlsWrapper from './midiControls/MidiControlsWrapper';
 
 const Wrapper = styled.main`
   overflow: hidden;
@@ -23,10 +26,17 @@ const MainGroup = styled.div`
 
 
 const AppTemplate = () => {
+  const [ isPianoRollCollapsed, setIsPianoRollCollapsed ] = useState(true);
+
   return (
     <Wrapper>
-        <Synth />
-      <PianoRoll />
+      <Synth />
+      <PianoRollCollapse isCollapsed={isPianoRollCollapsed}>
+        <MidiControlsWrapper>
+          <PianoRollCollapseSwitch isCollapsed={isPianoRollCollapsed} setIsCollapsed={setIsPianoRollCollapsed} />
+        </MidiControlsWrapper>
+        <PianoRoll />
+      </PianoRollCollapse>
     </Wrapper>
   )
 }

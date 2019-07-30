@@ -6,9 +6,12 @@ import { hex2rgba } from '../../helpers/ui';
 import useCurrentSong from '../../hooks/synthEngineHooks/useCurrentSong';
 import Track from './Track';
 
+export const PianoRollHeight = 500;
+
 const PianoRollWindowWrapper = styled.div`
   display: flex;
-  flex: 1;
+  height: ${PianoRollHeight}px;
+  width: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
 
@@ -150,8 +153,6 @@ const noteNumbers = Array.from({ length: 127 }, (_, i) => i).reverse();
 const PianoRoll = () => {
   const currentSong = useCurrentSong();
 
-  console .log(currentSong);
-
   return (
     <PianoRollWindowWrapper>
       <PianoRollWrapper>
@@ -182,4 +183,4 @@ const PianoRoll = () => {
   );
 };
 
-export default PianoRoll;
+export default React.memo(PianoRoll);
