@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --config ./config/webpack.dev.config.js --open --mode development",
     "build": "webpack --config ./config/webpack.config.js",
-    "deploy": "surge --project ./build --domain simplesynth.surge.sh"
+    "deploy": "surge --project ./dist --domain simplesynth.surge.sh"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
