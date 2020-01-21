@@ -30,10 +30,11 @@ class SynthEngine {
     this.midiReceiver = new MidiReceiver();
     this.midiReader = new MidiReader(this.midiReceiver);
     setTimeout(() => {
-      this.midiReader.loadTrack('TETRIS_THEME');
-      // this.midiReader.play();
+      this.midiReader.loadTrack('BLOODY_TEARS');
     }, 2000);
-    this.volumeEnvelope = new EnvelopeGenerator(0.01, 0.5 , 1, 0.5);
+
+    this.midiReader.onTrackLoaded(() => this.midiReader.play())
+    this.volumeEnvelope = new EnvelopeGenerator(0.01, 0.5 , 0.1, 0.2);
     this.voicing = new Voicing(
       this.ctx,
       this.oscillator,

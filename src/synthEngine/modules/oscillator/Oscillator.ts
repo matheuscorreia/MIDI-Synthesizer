@@ -12,7 +12,7 @@ class Oscillator {
   onChange: Signal;
 
   constructor() {
-    this.mode = OscillatorMode.Sine;
+    this.mode = OscillatorMode.Sawtooth;
     this.unison = 1;
     this.octave = 0;
 
