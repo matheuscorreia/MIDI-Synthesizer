@@ -58,7 +58,7 @@ class Voicing {
 
     freeVoice.reset();
     freeVoice.setNoteNumber(noteNumber);
-    freeVoice.setVelocity(velocity);
+    freeVoice.setVelocity(velocity / 5);
     freeVoice.setIsActive(true);
     freeVoice.getVolumeEnvelope().enterStage(EnvelopeStage.ATTACK);
   }
